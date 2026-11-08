@@ -1,0 +1,1032 @@
+{
+ "files": {
+  "facture_001.pdf": {
+   "supplier": "Demo Logistics Ltd",
+   "number": "INV-88045",
+   "date": "2026-01-22",
+   "currency": "USD",
+   "subtotal": 3926.09,
+   "vat_rate": 20,
+   "vat_amount": 785.22,
+   "total": 4711.31,
+   "lines": [
+    1236.45,
+    244.09,
+    1825.92,
+    325.96,
+    293.67
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_002.pdf": {
+   "supplier": "Boulangerie Exemple SARL",
+   "number": "2026/0002",
+   "date": "2026-01-03",
+   "currency": "EUR",
+   "subtotal": 2466.76,
+   "vat_rate": 10,
+   "vat_amount": 246.68,
+   "total": 2713.44,
+   "lines": [
+    677.52,
+    16.7,
+    147.0,
+    884.51,
+    741.03
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_003.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-62481",
+   "date": "2026-02-25",
+   "currency": "USD",
+   "subtotal": 3945.85,
+   "vat_rate": 20,
+   "vat_amount": 789.17,
+   "total": 4735.02,
+   "lines": [
+    2514.12,
+    523.08,
+    908.65
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_004.pdf": {
+   "supplier": "Boulangerie Exemple SARL",
+   "number": "2026/0004",
+   "date": "2026-05-19",
+   "currency": "EUR",
+   "subtotal": 2104.18,
+   "vat_rate": 20,
+   "vat_amount": 420.84,
+   "total": 2525.02,
+   "lines": [
+    517.59,
+    275.31,
+    1101.28,
+    210.0
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_005.pdf": {
+   "supplier": "Boulangerie Exemple SARL",
+   "number": "F-2026-0005",
+   "date": "2026-05-07",
+   "currency": "EUR",
+   "subtotal": 1917.02,
+   "vat_rate": 5.5,
+   "vat_amount": 105.44,
+   "total": 2022.46,
+   "lines": [
+    1917.02
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_006.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0006",
+   "date": "2026-05-19",
+   "currency": "EUR",
+   "subtotal": 4760.85,
+   "vat_rate": 5.5,
+   "vat_amount": 261.85,
+   "total": 5022.7,
+   "lines": [
+    740.46,
+    1388.7,
+    1632.12,
+    999.57
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_007.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "2026/0007",
+   "date": "2026-03-16",
+   "currency": "EUR",
+   "subtotal": 247.38,
+   "vat_rate": 5.5,
+   "vat_amount": 13.61,
+   "total": 260.99,
+   "lines": [
+    247.38
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_008.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "F-2026-0008",
+   "date": "2026-03-11",
+   "currency": "EUR",
+   "subtotal": 6100.29,
+   "vat_rate": 20,
+   "vat_amount": 1220.06,
+   "total": 7320.35,
+   "lines": [
+    1647.69,
+    45.66,
+    2190.89,
+    1352.4,
+    863.65
+   ],
+   "template": "T1",
+   "corrupted": false
+  },
+  "facture_009.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-65241",
+   "date": "2026-02-10",
+   "currency": "USD",
+   "subtotal": 2057.85,
+   "vat_rate": 8.25,
+   "vat_amount": 169.77,
+   "total": 2227.62,
+   "lines": [
+    1180.56,
+    211.47,
+    665.82
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_010.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "F-2026-0010",
+   "date": "2026-07-20",
+   "currency": "EUR",
+   "subtotal": 2947.12,
+   "vat_rate": 20,
+   "vat_amount": 589.42,
+   "total": 3536.54,
+   "lines": [
+    2947.12
+   ],
+   "template": "T1",
+   "corrupted": false
+  },
+  "facture_011.pdf": {
+   "supplier": "Boulangerie Exemple SARL",
+   "number": "2026/0011",
+   "date": "2026-05-08",
+   "currency": "EUR",
+   "subtotal": 3443.54,
+   "vat_rate": 10,
+   "vat_amount": 344.35,
+   "total": 3787.89,
+   "lines": [
+    867.68,
+    73.5,
+    2129.76,
+    358.29,
+    14.31
+   ],
+   "template": "T3",
+   "corrupted": false
+  },
+  "facture_012.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "F-2026-0012",
+   "date": "2026-01-18",
+   "currency": "EUR",
+   "subtotal": 3273.06,
+   "vat_rate": 20,
+   "vat_amount": 654.61,
+   "total": 3927.67,
+   "lines": [
+    1765.45,
+    199.38,
+    1308.23
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_013.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "2026/0013",
+   "date": "2026-08-20",
+   "currency": "EUR",
+   "subtotal": 524.6,
+   "vat_rate": 5.5,
+   "vat_amount": 28.85,
+   "total": 553.45,
+   "lines": [
+    11.56,
+    223.52,
+    289.52
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_014.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-85079",
+   "date": "2026-09-13",
+   "currency": "USD",
+   "subtotal": 3308.53,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 3308.53,
+   "lines": [
+    710.93,
+    2597.6
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_015.pdf": {
+   "supplier": "Demo Logistics Ltd",
+   "number": "INV-69998",
+   "date": "2026-10-25",
+   "currency": "USD",
+   "subtotal": 2920.98,
+   "vat_rate": 20,
+   "vat_amount": 584.2,
+   "total": 3505.18,
+   "lines": [
+    1374.36,
+    48.84,
+    715.24,
+    782.54
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_016.pdf": {
+   "supplier": "Example Supplies Inc.",
+   "number": "INV-28772",
+   "date": "2026-06-04",
+   "currency": "USD",
+   "subtotal": 1558.41,
+   "vat_rate": 8.25,
+   "vat_amount": 128.57,
+   "total": 1686.98,
+   "lines": [
+    282.99,
+    57.22,
+    95.52,
+    362.04,
+    760.64
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_017.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-38780",
+   "date": "2026-07-16",
+   "currency": "USD",
+   "subtotal": 2979.21,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 2979.21,
+   "lines": [
+    1360.5,
+    814.55,
+    804.16
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_018.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "F-2026-0018",
+   "date": "2026-02-27",
+   "currency": "EUR",
+   "subtotal": 1544.18,
+   "vat_rate": 5.5,
+   "vat_amount": 84.93,
+   "total": 1629.11,
+   "lines": [
+    1030.88,
+    513.3
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_019.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0019",
+   "date": "2026-02-08",
+   "currency": "EUR",
+   "subtotal": 2405.76,
+   "vat_rate": 10,
+   "vat_amount": 240.58,
+   "total": 2646.34,
+   "lines": [
+    981.26,
+    1424.5
+   ],
+   "template": "T1",
+   "corrupted": false
+  },
+  "facture_020.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "2026/0020",
+   "date": "2026-10-16",
+   "currency": "EUR",
+   "subtotal": 932.04,
+   "vat_rate": 20,
+   "vat_amount": 186.41,
+   "total": 1118.45,
+   "lines": [
+    932.04
+   ],
+   "template": "T3",
+   "corrupted": false
+  },
+  "facture_021.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-68521",
+   "date": "2026-03-01",
+   "currency": "USD",
+   "subtotal": 1264.6,
+   "vat_rate": 20,
+   "vat_amount": 252.92,
+   "total": 1517.52,
+   "lines": [
+    138.92,
+    1125.68
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_022.pdf": {
+   "supplier": "Example Supplies Inc.",
+   "number": "INV-33474",
+   "date": "2026-01-19",
+   "currency": "USD",
+   "subtotal": 1269.2,
+   "vat_rate": 20,
+   "vat_amount": 253.84,
+   "total": 1523.04,
+   "lines": [
+    371.52,
+    761.28,
+    136.4
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_023.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "F-2026-0023",
+   "date": "2026-08-19",
+   "currency": "EUR",
+   "subtotal": 4485.41,
+   "vat_rate": 5.5,
+   "vat_amount": 246.7,
+   "total": 4732.11,
+   "lines": [
+    2270.16,
+    1990.04,
+    225.21
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_024.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-70779",
+   "date": "2026-06-25",
+   "currency": "USD",
+   "subtotal": 1298.7,
+   "vat_rate": 20,
+   "vat_amount": 259.74,
+   "total": 1558.44,
+   "lines": [
+    1298.7
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_025.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-80379",
+   "date": "2026-06-08",
+   "currency": "USD",
+   "subtotal": 681.88,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 681.88,
+   "lines": [
+    522.0,
+    159.88
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_026.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "F-2026-0026",
+   "date": "2026-06-25",
+   "currency": "EUR",
+   "subtotal": 1102.08,
+   "vat_rate": 10,
+   "vat_amount": 110.21,
+   "total": 1212.29,
+   "lines": [
+    1102.08
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_027.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "2026/0027",
+   "date": "2026-10-24",
+   "currency": "EUR",
+   "subtotal": 3626.88,
+   "vat_rate": 10,
+   "vat_amount": 362.69,
+   "total": 3989.57,
+   "lines": [
+    40.86,
+    2021.32,
+    1109.34,
+    455.36
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_028.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-63881",
+   "date": "2026-04-13",
+   "currency": "USD",
+   "subtotal": 5084.16,
+   "vat_rate": 8.25,
+   "vat_amount": 419.44,
+   "total": 5503.6,
+   "lines": [
+    1499.5,
+    570.36,
+    517.32,
+    781.4,
+    1715.58
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_029.pdf": {
+   "supplier": "Demo Logistics Ltd",
+   "number": "INV-72018",
+   "date": "2026-05-07",
+   "currency": "USD",
+   "subtotal": 4567.58,
+   "vat_rate": 8.25,
+   "vat_amount": 376.83,
+   "total": 4944.41,
+   "lines": [
+    90.22,
+    2809.93,
+    450.3,
+    82.38,
+    1134.75
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_030.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0030",
+   "date": "2026-05-26",
+   "currency": "EUR",
+   "subtotal": 2362.42,
+   "vat_rate": 5.5,
+   "vat_amount": 129.93,
+   "total": 2492.35,
+   "lines": [
+    1527.2,
+    536.76,
+    225.36,
+    73.1
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_031.pdf": {
+   "supplier": "Domaine Test SCEA",
+   "number": "F-2026-0031",
+   "date": "2026-04-15",
+   "currency": "EUR",
+   "subtotal": 6468.4,
+   "vat_rate": 20,
+   "vat_amount": 1293.68,
+   "total": 7762.08,
+   "lines": [
+    363.76,
+    1920.83,
+    2692.97,
+    1490.84
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_032.pdf": {
+   "supplier": "Example Supplies Inc.",
+   "number": "INV-41371",
+   "date": "2026-03-10",
+   "currency": "USD",
+   "subtotal": 8107.48,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 8107.48,
+   "lines": [
+    1074.64,
+    2935.5,
+    1952.16,
+    1161.4,
+    983.78
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_033.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-36336",
+   "date": "2026-02-19",
+   "currency": "USD",
+   "subtotal": 3333.32,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 3333.32,
+   "lines": [
+    250.51,
+    2566.98,
+    515.83
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_034.pdf": {
+   "supplier": "Domaine Test SCEA",
+   "number": "2026/0034",
+   "date": "2026-10-10",
+   "currency": "EUR",
+   "subtotal": 3828.94,
+   "vat_rate": 5.5,
+   "vat_amount": 210.59,
+   "total": 4039.53,
+   "lines": [
+    509.76,
+    3055.75,
+    263.43
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_035.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "2026/0035",
+   "date": "2026-02-19",
+   "currency": "EUR",
+   "subtotal": 2325.07,
+   "vat_rate": 5.5,
+   "vat_amount": 127.88,
+   "total": 2452.95,
+   "lines": [
+    178.7,
+    228.9,
+    1669.9,
+    247.57
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_036.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-22425",
+   "date": "2026-03-26",
+   "currency": "USD",
+   "subtotal": 3348.36,
+   "vat_rate": 20,
+   "vat_amount": 669.67,
+   "total": 4018.03,
+   "lines": [
+    942.6,
+    52.32,
+    304.56,
+    1159.2,
+    889.68
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_037.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0037",
+   "date": "2026-10-27",
+   "currency": "EUR",
+   "subtotal": 1344.2,
+   "vat_rate": 20,
+   "vat_amount": 268.84,
+   "total": 1613.04,
+   "lines": [
+    1344.2
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_038.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0038",
+   "date": "2026-06-18",
+   "currency": "EUR",
+   "subtotal": 882.06,
+   "vat_rate": 5.5,
+   "vat_amount": 48.51,
+   "total": 930.57,
+   "lines": [
+    882.06
+   ],
+   "template": "T1",
+   "corrupted": false
+  },
+  "facture_039.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "2026/0039",
+   "date": "2026-02-21",
+   "currency": "EUR",
+   "subtotal": 936.45,
+   "vat_rate": 10,
+   "vat_amount": 93.64,
+   "total": 1030.09,
+   "lines": [
+    504.66,
+    431.79
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_040.pdf": {
+   "supplier": "Domaine Test SCEA",
+   "number": "2026/0040",
+   "date": "2026-01-12",
+   "currency": "EUR",
+   "subtotal": 3289.91,
+   "vat_rate": 20,
+   "vat_amount": 657.98,
+   "total": 3947.89,
+   "lines": [
+    86.64,
+    445.06,
+    653.41,
+    1217.06,
+    887.74
+   ],
+   "template": "T3",
+   "corrupted": false
+  },
+  "facture_041.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0041",
+   "date": "2026-05-13",
+   "currency": "EUR",
+   "subtotal": 1550.18,
+   "vat_rate": 5.5,
+   "vat_amount": 85.26,
+   "total": 1635.44,
+   "lines": [
+    728.73,
+    821.45
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_042.pdf": {
+   "supplier": "Domaine Test SCEA",
+   "number": "2026/0042",
+   "date": "2026-10-05",
+   "currency": "EUR",
+   "subtotal": 9101.02,
+   "vat_rate": 10,
+   "vat_amount": 910.1,
+   "total": 10011.12,
+   "lines": [
+    1663.02,
+    2191.5,
+    1950.48,
+    2178.41,
+    1117.61
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_043.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "F-2026-0043",
+   "date": "2026-01-22",
+   "currency": "EUR",
+   "subtotal": 3854.58,
+   "vat_rate": 20,
+   "vat_amount": 770.92,
+   "total": 4625.5,
+   "lines": [
+    736.82,
+    1152.2,
+    1897.76,
+    67.8
+   ],
+   "template": "T1",
+   "corrupted": false
+  },
+  "facture_044.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-78597",
+   "date": "2026-01-24",
+   "currency": "USD",
+   "subtotal": 2451.49,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 2451.49,
+   "lines": [
+    323.52,
+    142.09,
+    165.88,
+    1820.0
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_045.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "2026/0045",
+   "date": "2026-03-21",
+   "currency": "EUR",
+   "subtotal": 6047.91,
+   "vat_rate": 20,
+   "vat_amount": 1209.58,
+   "total": 7257.49,
+   "lines": [
+    881.15,
+    2554.8,
+    1525.0,
+    1086.96
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_046.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-75922",
+   "date": "2026-02-28",
+   "currency": "USD",
+   "subtotal": 7806.98,
+   "vat_rate": 8.25,
+   "vat_amount": 644.08,
+   "total": 8451.06,
+   "lines": [
+    1634.85,
+    2344.6,
+    2500.53,
+    1327.0
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_047.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "2026/0047",
+   "date": "2026-01-20",
+   "currency": "EUR",
+   "subtotal": 3228.29,
+   "vat_rate": 20,
+   "vat_amount": 645.66,
+   "total": 3873.95,
+   "lines": [
+    610.92,
+    1224.9,
+    731.04,
+    227.72,
+    433.71
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_048.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-92720",
+   "date": "2026-05-01",
+   "currency": "USD",
+   "subtotal": 493.47,
+   "vat_rate": 20,
+   "vat_amount": 98.69,
+   "total": 592.16,
+   "lines": [
+    493.47
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_049.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-65621",
+   "date": "2026-08-16",
+   "currency": "USD",
+   "subtotal": 1518.25,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 1518.25,
+   "lines": [
+    435.47,
+    756.3,
+    326.48
+   ],
+   "template": "T2",
+   "corrupted": false
+  },
+  "facture_050.pdf": {
+   "supplier": "Boulangerie Exemple SARL",
+   "number": "F-2026-0050",
+   "date": "2026-07-09",
+   "currency": "EUR",
+   "subtotal": 1348.34,
+   "vat_rate": 10,
+   "vat_amount": 134.83,
+   "total": 1483.17,
+   "lines": [
+    351.84,
+    996.5
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_051.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-37952",
+   "date": "2026-06-08",
+   "currency": "USD",
+   "subtotal": 3083.21,
+   "vat_rate": 0,
+   "vat_amount": 0.0,
+   "total": 3083.21,
+   "lines": [
+    296.31,
+    1958.9,
+    828.0
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_052.pdf": {
+   "supplier": "Sample Parts Co.",
+   "number": "INV-67408",
+   "date": "2026-05-23",
+   "currency": "USD",
+   "subtotal": 3251.65,
+   "vat_rate": 20,
+   "vat_amount": 650.33,
+   "total": 3901.98,
+   "lines": [
+    575.96,
+    525.52,
+    739.42,
+    1410.75
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_053.pdf": {
+   "supplier": "Demo Logistics Ltd",
+   "number": "INV-57620",
+   "date": "2026-01-13",
+   "currency": "USD",
+   "subtotal": 3050.78,
+   "vat_rate": 8.25,
+   "vat_amount": 251.69,
+   "total": 3302.47,
+   "lines": [
+    2265.38,
+    785.4
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_054.pdf": {
+   "supplier": "Demo Harbor LLC",
+   "number": "INV-33146",
+   "date": "2026-04-01",
+   "currency": "USD",
+   "subtotal": 1815.35,
+   "vat_rate": 20,
+   "vat_amount": 363.07,
+   "total": 2178.42,
+   "lines": [
+    1283.45,
+    531.9
+   ],
+   "template": "T2",
+   "corrupted": true
+  },
+  "facture_055.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "2026/0055",
+   "date": "2026-10-25",
+   "currency": "EUR",
+   "subtotal": 703.79,
+   "vat_rate": 5.5,
+   "vat_amount": 38.71,
+   "total": 742.5,
+   "lines": [
+    41.38,
+    544.5,
+    117.91
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_056.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "2026/0056",
+   "date": "2026-02-13",
+   "currency": "EUR",
+   "subtotal": 181.94,
+   "vat_rate": 10,
+   "vat_amount": 18.19,
+   "total": 200.13,
+   "lines": [
+    181.94
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_057.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0057",
+   "date": "2026-01-24",
+   "currency": "EUR",
+   "subtotal": 3373.68,
+   "vat_rate": 20,
+   "vat_amount": 674.74,
+   "total": 4048.42,
+   "lines": [
+    1030.16,
+    1057.23,
+    836.94,
+    449.35
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_058.pdf": {
+   "supplier": "Atelier Modèle SAS",
+   "number": "2026/0058",
+   "date": "2026-07-12",
+   "currency": "EUR",
+   "subtotal": 2147.09,
+   "vat_rate": 20,
+   "vat_amount": 429.42,
+   "total": 2576.51,
+   "lines": [
+    480.54,
+    1129.65,
+    308.2,
+    228.7
+   ],
+   "template": "T3",
+   "corrupted": true
+  },
+  "facture_059.pdf": {
+   "supplier": "Garage Fictif et Fils",
+   "number": "F-2026-0059",
+   "date": "2026-09-04",
+   "currency": "EUR",
+   "subtotal": 2963.74,
+   "vat_rate": 20,
+   "vat_amount": 592.75,
+   "total": 3556.49,
+   "lines": [
+    1346.38,
+    171.84,
+    1173.4,
+    272.12
+   ],
+   "template": "T1",
+   "corrupted": true
+  },
+  "facture_060.pdf": {
+   "supplier": "Papeterie Démo SARL",
+   "number": "F-2026-0060",
+   "date": "2026-04-05",
+   "currency": "EUR",
+   "subtotal": 3081.68,
+   "vat_rate": 10,
+   "vat_amount": 308.17,
+   "total": 3389.85,
+   "lines": [
+    488.28,
+    2593.4
+   ],
+   "template": "T1",
+   "corrupted": true
+  }
+ }
+}
