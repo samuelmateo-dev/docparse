@@ -93,7 +93,7 @@ Three layouts: **T1** (French, €) and **T2** (English, $), which the extractor
 - **LLM interface not tested against a real API** (tests use a fake model). Sending client invoices to an external service raises a data-protection question to settle with the client first.
 - Added labels are exact text: a wording that varies is one label per wording. Rules cannot read a field that has no label (a supplier name on the first line, say): it stays empty and is flagged.
 - Dates are read as `dd/mm/yyyy` (never `mm/dd`), amounts with three decimals are not handled, and `1,234` is read as one thousand two hundred thirty-four.
-- Tested on Python 3.13 only; no continuous integration run.
+- Tested locally on Python 3.12 and 3.13 (3.10 syntax checked, not run). A GitHub Actions workflow (Python 3.10 and 3.12) was added in the latest commit; its first run had not been checked when this was written.
 - The deliberate code changes ("mutants") are written by hand: 15 out of 15 detected on the original code (not re-run since the options were added) and 37 of 38 on the options code; the 38th changed no result on 20,000 random cases. This does not prove the absence of defects.
 
 ## Structure
