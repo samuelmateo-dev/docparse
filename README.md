@@ -15,20 +15,51 @@ Turns **invoices (PDF or text) into a table**, checks every result with arithmet
 | **Extraction + checks**: every unrecognized field stays empty instead of being guessed, then the arithmetic (lines, subtotal, VAT, total) is verified | `rules.py`, `validate.py` |
 | **Accuracy measurement**: 95% Wilson intervals, silent errors counted separately, results per layout | `evaluate.py` |
 | **Defects found by measurement, then fixed** (see below) | `tests/` |
+| **Configurable without touching the code**: add your own labels and month names (`--rules`), turn individual checks off (`--skip`), and the output reminds you of both | `rules.py`, `validate.py`, `examples/` |
 | **Language-model interface**: its answer goes through the same checks; tested with a fake model | `llm.py` |
-| **Quality**: 95 tests, 15 deliberate code changes ("mutants"), all detected | `tests/` |
+| **Quality**: 165 tests; deliberate code changes ("mutants") all detected: 15 on the original code, 37 of 38 on the options code (the 38th changed no result on 20,000 random cases) | `tests/` |
 
 ## Getting started
 
 ```bash
 pip install -e ".[dev]"
-pytest                                                    # 95 tests, under a second
+pytest                                                    # 165 tests, a few seconds
 docparse run data/sample/invoices --out results.csv       # reads, checks, writes a CSV (--delimiter ";" for French-locale Excel)
 docparse eval data/sample/invoices --truth data/sample/truth.json
 docparse eval data/sample_noisy/invoices --truth data/sample_noisy/truth.json --suppliers data/sample/suppliers.txt
+docparse rules                                            # default labels, months, checks, and the --rules file format
 ```
 
 `--suppliers` takes a text file, one supplier per line: a name missing from the list is flagged.
+
+## Adapting it to your documents
+
+The extractor reads a fixed set of labels. Instead of editing the code, you can **add** labels and month names with a small JSON file (`docparse rules` prints the defaults and the file format):
+
+```json
+{
+  "labels": {
+    "total": ["net à payer", "montant dû"],
+    "subtotal": ["base imposable"],
+    "invoice_number": ["pièce"],
+    "supplier": ["raison sociale"],
+    "due_date": ["date limite"]
+  },
+  "months": { "enero": 1, "märz": 3 }
+}
+```
+
+```bash
+docparse run invoices/ --rules my-rules.json
+docparse eval invoices/ --truth truth.json --rules my-rules.json    # measure what the rules change, don't assume it
+docparse run invoices/ --skip lines,lines-sum                       # invoices without a line table: turn those two checks off
+```
+
+- Labels are plain text, not regular expressions. Case and repeated spaces don't matter; a label must start and end with a letter or digit. For the amounts (total, subtotal) your labels are tried **before** the built-in ones, so a generic "total" cannot hide your "net à payer".
+- Rules only **add**: a default label cannot be removed.
+- A mistake in the file (unknown key, unknown field, month number outside 1–12, label too long) is refused with a message that names the faulty entry. It is never ignored silently.
+- `--skip` takes check names (`required`, `known-supplier`, `lines`, `date`, `line-amount`, `lines-sum`, `vat-total`, `vat-rate`, `vat-gap`; an unknown name is an error). **Turning checks off has a cost, and the output says so every time**: on the sample, turning off `required` alone makes 12 flagged errors silent (silent errors go from 2 to 14).
+- Illustration: on the sample, `examples/rules.example.json` makes the 10 documents of the unknown layout T3 readable (accuracy on the subtotal and the total goes from 50/60 and 48/60 to 60/60 and 58/60) but they stay flagged: their supplier has no label, it is just the first line. I wrote that file while looking at those documents, so it shows the mechanism; it does not measure how well such rules carry over to other documents.
 
 ## Results (60 fictitious invoices per set)
 
@@ -43,7 +74,7 @@ Three layouts: **T1** (French, €) and **T2** (English, $), which the extractor
 
 **How to read these rows.**
 
-- Documents in an unknown layout (T3) are **all** flagged and never wrongly validated: the extractor abstains.
+- Documents in an unknown layout (T3) are **all** flagged and never wrongly validated: with the built-in labels, the extractor abstains.
 - The arithmetic checks catch reading errors that touch an amount. They **cannot see** an error in a name or an invoice number: that is what remains as silent errors.
 - The known-suppliers list catches some of them (the names), not the invoice numbers.
 - No false alarms on these sets: a correct document is never flagged by mistake. This is not a guarantee on real documents.
@@ -53,21 +84,24 @@ Three layouts: **T1** (French, €) and **T2** (English, $), which the extractor
 1. **Amounts prefixed by the currency** (`Subtotal: $1,234.50`): the evaluation showed 0 correct English invoices out of 17. Fixed, regression test `test_currency_symbol_before_amount_regression`.
 2. **One-cent tolerance**: `100.01 - 100.00` is `0.0100000000000051` in floating point, so a gap of exactly one cent was rejected. Fixed by rounding to 6 decimals before comparing.
 3. **Useless safeguards removed**: a redundant regular expression and an unreachable JSON type check, discovered because removing them broke no test.
+4. **`Total H.T.` was never read**: the label was followed by a `\b`, which cannot match right after a dot. Found while testing that every label printed by `docparse rules` is really read; fixed, test `test_total_h_t_with_dots_is_read_as_subtotal`.
 
 ## Limitations
 
 - **Fictitious data only.** Real invoices vary far more: the rule-based extractor only reads the layouts it knows. For a client, the approach is: take 20 of their real invoices, write the correct answer by hand, run `docparse eval`, and report the measured rate, not a hoped-for one.
 - **No OCR.** A scanned PDF without a text layer is flagged "no readable text" (`aucun texte lisible` in the French output).
 - **LLM interface not tested against a real API** (tests use a fake model). Sending client invoices to an external service raises a data-protection question to settle with the client first.
+- Added labels are exact text: a wording that varies is one label per wording. Rules cannot read a field that has no label (a supplier name on the first line, say): it stays empty and is flagged.
 - Dates are read as `dd/mm/yyyy` (never `mm/dd`), amounts with three decimals are not handled, and `1,234` is read as one thousand two hundred thirty-four.
 - Tested on Python 3.13 only; no continuous integration run.
-- The deliberate code changes ("mutants") are written by hand: 15 out of 15 detected. This does not prove the absence of defects.
+- The deliberate code changes ("mutants") are written by hand: 15 out of 15 detected on the original code (not re-run since the options were added) and 37 of 38 on the options code; the 38th changed no result on 20,000 random cases. This does not prove the absence of defects.
 
 ## Structure
 
 ```
 src/docparse/   schema · amounts · rules · validate · pdf · pipeline · evaluate · llm · synth · cli
-tests/          95 tests (pivot values pinned in test_pipeline_cli.py: if they change, this README needs review)
+tests/          165 tests (pivot values pinned in test_pipeline_cli.py: if they change, this README needs review)
+examples/       rules.example.json (the file shown above)
 data/sample/    60 fictitious PDF invoices + truth.json + suppliers.txt
 data/sample_noisy/   60 heavily noisy invoices + truth.json
 scripts/make_sample.py   regenerates both sets (requires fpdf2 and a monospaced Unicode font)

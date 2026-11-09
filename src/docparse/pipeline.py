@@ -9,7 +9,7 @@ from typing import Callable, Iterable
 from . import rules
 from .pdf import UnreadableDocument, read_text
 from .schema import Extraction, ExtractionError, Invoice
-from .validate import validate
+from .validate import check_skip, validate
 
 EXTENSIONS = {".pdf", ".txt"}
 NO_TEXT = "aucun texte lisible (scan ? l'OCR n'est pas géré)"
@@ -30,20 +30,31 @@ def list_documents(root: Path) -> list[Path]:
 
 
 def process_text(
-    source: str, text: str, extractor: Extractor = rules.extract, today: date | None = None, known_suppliers: frozenset[str] | None = None
+    source: str,
+    text: str,
+    extractor: Extractor = rules.extract,
+    today: date | None = None,
+    known_suppliers: frozenset[str] | None = None,
+    skip: Iterable[str] = (),
 ) -> Extraction:
+    skip = check_skip(skip)
     if not text.strip():
         return Extraction(source, Invoice(), [NO_TEXT])
     try:
         invoice = extractor(text)
     except ExtractionError as exc:
         return Extraction(source, Invoice(), [f"extraction impossible : {exc}"])
-    return Extraction(source, invoice, validate(invoice, today, known_suppliers))
+    return Extraction(source, invoice, validate(invoice, today, known_suppliers, skip))
 
 
 def process(
-    root: Path, extractor: Extractor = rules.extract, today: date | None = None, known_suppliers: frozenset[str] | None = None
+    root: Path,
+    extractor: Extractor = rules.extract,
+    today: date | None = None,
+    known_suppliers: frozenset[str] | None = None,
+    skip: Iterable[str] = (),
 ) -> list[Extraction]:
+    skip = check_skip(skip)
     results = []
     for path in list_documents(root):
         try:
@@ -51,7 +62,7 @@ def process(
         except UnreadableDocument as exc:
             results.append(Extraction(path.name, Invoice(), [str(exc)]))
             continue
-        results.append(process_text(path.name, text, extractor, today, known_suppliers))
+        results.append(process_text(path.name, text, extractor, today, known_suppliers, skip))
     return results
 
 

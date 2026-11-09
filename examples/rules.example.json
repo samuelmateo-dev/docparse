@@ -1,0 +1,10 @@
+{
+  "labels": {
+    "total": ["net à payer", "montant dû"],
+    "subtotal": ["base imposable"],
+    "invoice_number": ["pièce"],
+    "supplier": ["raison sociale"],
+    "due_date": ["date limite"]
+  },
+  "months": { "enero": 1, "märz": 3 }
+}

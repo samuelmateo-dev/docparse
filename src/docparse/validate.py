@@ -5,6 +5,7 @@ Ils ne voient pas une faute dans un nom ou un numéro de facture : voir ``evalua
 from __future__ import annotations
 
 from datetime import date, timedelta
+from typing import Iterable
 
 from .schema import Invoice
 
@@ -26,33 +27,72 @@ REQUIRED = (
 )
 
 
-def validate(invoice: Invoice, today: date | None = None, known_suppliers: frozenset[str] | None = None) -> list[str]:
-    """``known_suppliers`` : noms (en minuscules) de tes fournisseurs habituels ; un nom absent de la liste est signalé."""
+# Contrôles nommés, dans l'ordre où leurs messages sont produits. Le nom sert à en désactiver un (``skip``).
+CHECKS: tuple[tuple[str, str], ...] = (
+    ("required", "champs obligatoires présents (numéro, date, fournisseur, total HT, total à payer)"),
+    ("known-supplier", "fournisseur présent dans ta liste (seulement si tu en donnes une)"),
+    ("lines", "au moins une ligne de facture lue"),
+    ("date", "date plausible (entre 2000 et un an dans le futur)"),
+    ("line-amount", "quantité × prix unitaire = montant, ligne par ligne"),
+    ("lines-sum", "somme des lignes = total HT"),
+    ("vat-total", "HT + TVA = total à payer"),
+    ("vat-rate", "TVA = taux × HT"),
+    ("vat-gap", "pas d'écart entre HT et total quand aucune ligne de TVA n'est lue"),
+)
+CHECK_NAMES = tuple(name for name, _ in CHECKS)
+
+
+def check_skip(skip: Iterable[str]) -> frozenset[str]:
+    """Noms de contrôles à ignorer, vérifiés : un nom inconnu (faute de frappe) lève ValueError."""
+    skipped = frozenset(skip)
+    unknown = sorted(skipped - set(CHECK_NAMES))
+    if unknown:
+        raise ValueError(f"contrôle inconnu : {', '.join(unknown)} (contrôles disponibles : {', '.join(CHECK_NAMES)})")
+    return skipped
+
+
+def validate(
+    invoice: Invoice,
+    today: date | None = None,
+    known_suppliers: frozenset[str] | None = None,
+    skip: Iterable[str] = (),
+) -> list[str]:
+    """``known_suppliers`` : noms (en minuscules) de tes fournisseurs habituels ; un nom absent de la liste est signalé.
+
+    ``skip`` : noms de contrôles à ne pas faire (voir ``CHECKS``). Un nom inconnu est une erreur, pas un oubli silencieux.
+    """
+    skipped = check_skip(skip)
     today = today or date.today()
     issues: list[str] = []
-    for attribute, label in REQUIRED:
-        if getattr(invoice, attribute) is None:
-            issues.append(f"champ manquant : {label}")
-    if known_suppliers and invoice.supplier is not None and invoice.supplier.casefold() not in known_suppliers:
+
+    def active(name: str) -> bool:
+        return name not in skipped
+
+    if active("required"):
+        for attribute, label in REQUIRED:
+            if getattr(invoice, attribute) is None:
+                issues.append(f"champ manquant : {label}")
+    if active("known-supplier") and known_suppliers and invoice.supplier is not None and invoice.supplier.casefold() not in known_suppliers:
         issues.append(f"fournisseur inconnu : {invoice.supplier!r} (faute de lecture ?)")
-    if not invoice.lines:
+    if active("lines") and not invoice.lines:
         issues.append("aucune ligne de facture lue")
-    if invoice.date is not None and not (date(2000, 1, 1) <= invoice.date <= today + timedelta(days=366)):
+    if active("date") and invoice.date is not None and not (date(2000, 1, 1) <= invoice.date <= today + timedelta(days=366)):
         issues.append(f"date improbable : {invoice.date.isoformat()}")
-    for line in invoice.lines:
-        if _differs(line.quantity * line.unit_price, line.amount, TOLERANCE):
-            issues.append(f"ligne incohérente : {line.description!r} ({line.quantity} × {line.unit_price} ≠ {line.amount})")
-    if invoice.lines and invoice.subtotal is not None:
+    if active("line-amount"):
+        for line in invoice.lines:
+            if _differs(line.quantity * line.unit_price, line.amount, TOLERANCE):
+                issues.append(f"ligne incohérente : {line.description!r} ({line.quantity} × {line.unit_price} ≠ {line.amount})")
+    if active("lines-sum") and invoice.lines and invoice.subtotal is not None:
         lines_sum = round(sum(line.amount for line in invoice.lines), 2)
         if _differs(lines_sum, invoice.subtotal, TOLERANCE):
             issues.append(f"somme des lignes ({lines_sum}) ≠ total HT ({invoice.subtotal})")
-    if invoice.subtotal is not None and invoice.vat_amount is not None and invoice.total is not None:
+    if active("vat-total") and invoice.subtotal is not None and invoice.vat_amount is not None and invoice.total is not None:
         if _differs(invoice.subtotal + invoice.vat_amount, invoice.total, TOLERANCE):
             issues.append(f"HT ({invoice.subtotal}) + TVA ({invoice.vat_amount}) ≠ total ({invoice.total})")
-    if invoice.subtotal is not None and invoice.vat_rate is not None and invoice.vat_amount is not None:
+    if active("vat-rate") and invoice.subtotal is not None and invoice.vat_rate is not None and invoice.vat_amount is not None:
         if _differs(invoice.subtotal * invoice.vat_rate / 100, invoice.vat_amount, VAT_TOLERANCE):
             issues.append(f"TVA ({invoice.vat_amount}) ≠ {invoice.vat_rate} % de {invoice.subtotal}")
-    if invoice.vat_amount is None and invoice.subtotal is not None and invoice.total is not None:
+    if active("vat-gap") and invoice.vat_amount is None and invoice.subtotal is not None and invoice.total is not None:
         if _differs(invoice.subtotal, invoice.total, TOLERANCE):
             issues.append("écart entre HT et total sans ligne de TVA lue")
     return issues

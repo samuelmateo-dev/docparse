@@ -1,4 +1,4 @@
-"""Ligne de commande : ``docparse run`` et ``docparse eval``."""
+"""Ligne de commande : ``docparse run``, ``docparse eval`` et ``docparse rules``."""
 from __future__ import annotations
 
 import argparse
@@ -7,7 +7,9 @@ import sys
 from pathlib import Path
 
 from . import pipeline
+from . import rules as rules_module
 from .evaluate import FIELDS, evaluate, wilson
+from .validate import CHECKS, check_skip
 
 
 def pct(x: float, digits: int = 0) -> str:
@@ -31,15 +33,53 @@ def _suppliers(args: argparse.Namespace):
     return pipeline.load_suppliers(path)
 
 
+def _options(args: argparse.Namespace):
+    """(fournisseurs, extracteur, contrôles ignorés), ou None si une option est invalide (message déjà affiché)."""
+    suppliers = _suppliers(args)
+    if suppliers is False:
+        return None
+    extractor = rules_module.extract
+    if args.rules:
+        path = Path(args.rules)
+        if not path.is_file():
+            print(f"Introuvable : {path}", file=sys.stderr)
+            return None
+        try:
+            extractor = rules_module.extractor(rules_module.load_rules(path))
+        except rules_module.RulesError as exc:
+            print(f"Règles invalides ({path}) : {exc}", file=sys.stderr)
+            return None
+    try:
+        skip = sorted(check_skip(args.skip))
+    except ValueError as exc:
+        print(f"Erreur : {exc}", file=sys.stderr)
+        return None
+    return suppliers, extractor, skip
+
+
+def _options_note(args: argparse.Namespace, skip: list[str]) -> str:
+    """Rappel affiché avec les résultats : ce qui a été changé par rapport aux règles et contrôles d'origine."""
+    lines = []
+    if args.rules:
+        lines.append(f"Règles supplémentaires : {args.rules} (elles s'ajoutent aux libellés d'origine).")
+    if skip:
+        lines.append(
+            f"Contrôles désactivés : {', '.join(skip)}. Ce qu'ils auraient signalé ne l'est pas : "
+            "un document « non signalé » est donc moins fiable qu'avec tous les contrôles."
+        )
+    return "\n".join(lines)
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     root = Path(args.path)
     if not root.exists():
         print(f"Introuvable : {root}", file=sys.stderr)
         return 1
-    suppliers = _suppliers(args)
-    if suppliers is False:
+    options = _options(args)
+    if options is None:
         return 1
-    results = pipeline.process(root, known_suppliers=suppliers)
+    suppliers, extractor, skip = options
+    results = pipeline.process(root, extractor=extractor, known_suppliers=suppliers, skip=skip)
     if not results:
         print(f"Aucun document .pdf ou .txt dans {root}", file=sys.stderr)
         return 1
@@ -47,6 +87,9 @@ def cmd_run(args: argparse.Namespace) -> int:
     print(table(["Fichier", "Numéro", "Total", "À vérifier"], rows))
     flagged = sum(r.needs_review for r in results)
     print(f"\n{len(results)} document(s) lu(s), {flagged} à vérifier à la main.")
+    note = _options_note(args, skip)
+    if note:
+        print(note)
     if args.out:
         pipeline.write_csv(results, Path(args.out), args.delimiter)
         print(f"Résultats écrits dans {args.out} (colonne « problemes » : le détail).")
@@ -61,14 +104,17 @@ def cmd_eval(args: argparse.Namespace) -> int:
             print(f"Introuvable : {path}", file=sys.stderr)
             return 1
     truth = json.loads(truth_path.read_text(encoding="utf-8"))["files"]
-    suppliers = _suppliers(args)
-    if suppliers is False:
+    options = _options(args)
+    if options is None:
         return 1
-    ev = evaluate(pipeline.process(root, known_suppliers=suppliers), truth)
+    suppliers, extractor, skip = options
+    ev = evaluate(pipeline.process(root, extractor=extractor, known_suppliers=suppliers, skip=skip), truth)
     if ev.documents == 0:
         print("Aucun document commun entre le dossier et le fichier de vérité.", file=sys.stderr)
         return 1
-    print(f"Évaluation sur {ev.documents} documents (intervalles de Wilson à 95 %)\n")
+    print(f"Évaluation sur {ev.documents} documents (intervalles de Wilson à 95 %)")
+    note = _options_note(args, skip)
+    print(note + "\n" if note else "")
     rows = []
     for name in FIELDS:
         k = ev.field_correct[name]
@@ -92,6 +138,41 @@ def cmd_eval(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rules(args: argparse.Namespace) -> int:
+    print("Libellés reconnus par défaut (tu peux en AJOUTER avec --rules, pas en retirer) :\n")
+    print("\n".join(f"  {field:<15} {', '.join(labels)}" for field, labels in rules_module.DEFAULT_LABELS.items()))
+    by_number: dict[int, list[str]] = {}
+    for name, number in rules_module.MONTHS.items():
+        by_number.setdefault(number, []).append(name)
+    print("\nMois reconnus dans une date écrite « 5 octobre 2026 » :\n")
+    print("\n".join(f"  {number:>2}  {', '.join(names)}" for number, names in sorted(by_number.items())))
+    print("\nContrôles de cohérence (désactivables avec --skip nom1,nom2) :\n")
+    print("\n".join(f"  {name:<15} {description}" for name, description in CHECKS))
+    print("\nFichier de règles (JSON) à passer avec --rules ; seules les clés « labels » et « months » existent :\n")
+    print(rules_module.EXAMPLE_TEXT.rstrip())
+    print(
+        "\nPour les montants, un libellé ajouté est essayé AVANT ceux d'origine (ton « net à payer » n'est pas masqué par « total »). "
+        "Il s'écrit en toutes lettres, sans expression régulière ; la casse et les espaces multiples sont indifférents, "
+        "et il doit commencer et finir par une lettre ou un chiffre. Un nom de mois ne contient que des lettres."
+    )
+    print(
+        "Une clé inconnue ou une faute de frappe est refusée avec un message (jamais ignorée en silence). "
+        "Les règles ne rendent pas une facture juste : « docparse eval » mesure toujours les erreurs silencieuses."
+    )
+    return 0
+
+
+def _add_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--suppliers", help="Fichier texte, un fournisseur par ligne : un nom absent de la liste est signalé")
+    parser.add_argument("--rules", help="Fichier JSON de libellés et de mois à ajouter aux règles d'origine (voir « docparse rules »)")
+    parser.add_argument(
+        "--skip",
+        default="",
+        type=lambda text: [part.strip() for part in text.split(",") if part.strip()],
+        help="Contrôles à ne pas faire, séparés par des virgules (liste : « docparse rules »)",
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="docparse", description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
@@ -99,13 +180,15 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("path")
     r.add_argument("--out", help="Écrit un CSV (lisible par Excel)")
     r.add_argument("--delimiter", default=",", help="Séparateur du CSV (« ; » pour Excel en français)")
-    r.add_argument("--suppliers", help="Fichier texte, un fournisseur par ligne : un nom absent de la liste est signalé")
+    _add_options(r)
     r.set_defaults(func=cmd_run)
     e = sub.add_parser("eval", help="Compare les résultats à une vérité connue et compte les erreurs silencieuses")
     e.add_argument("path")
     e.add_argument("--truth", required=True)
-    e.add_argument("--suppliers", help="Fichier texte, un fournisseur par ligne : un nom absent de la liste est signalé")
+    _add_options(e)
     e.set_defaults(func=cmd_eval)
+    g = sub.add_parser("rules", help="Affiche les libellés, mois et contrôles par défaut, et le format du fichier --rules")
+    g.set_defaults(func=cmd_rules)
     return p
 
 
