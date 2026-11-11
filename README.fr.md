@@ -91,7 +91,7 @@ Trois mises en page : **T1** (français, €), **T2** (anglais, $) que l'extract
 - **Interface LLM non testée contre une vraie API** (tests avec un faux modèle). Envoyer des factures de clients à un service externe pose une question de protection des données à régler avec le client avant.
 - Les libellés ajoutés sont du texte exact : une formulation qui varie vaut un libellé par formulation. Les règles ne lisent pas un champ sans libellé (un nom de fournisseur en première ligne, par exemple) : il reste vide et est signalé.
 - Dates lues en `jj/mm/aaaa` (jamais `mm/jj`), montants à trois décimales non gérés, `1,234` lu comme mille deux cent trente-quatre.
-- Testé en local sous Python 3.12 et 3.13 (syntaxe 3.10 vérifiée, non exécutée). Un workflow GitHub Actions (Python 3.10 et 3.12) a été ajouté au dernier commit ; son premier lancement n'avait pas été vérifié au moment de l'écriture.
+- **Développé sous Python 3.13.** Le workflow GitHub Actions lance les tests sous Python 3.10 et 3.12 à chaque push (au vert au moment de l'écriture).
 - Les modifications volontaires du code (« mutants ») sont écrites à la main : 15 sur 15 détectées sur le code d'origine (non relancées depuis l'ajout des options) et 37 sur 38 sur le code des options ; la 38ᵉ n'a changé aucun résultat sur 20 000 cas aléatoires. Cela ne prouve pas l'absence de défauts.
 
 ## Structure
